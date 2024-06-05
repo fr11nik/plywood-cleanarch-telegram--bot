@@ -21,6 +21,7 @@ class Repository:
                         password=cfg.password,
                         port=cfg.port)
         self.cursor = conn.cursor()
+        self.conn = conn
 
     def exit_handler(self):
        self.cursor.close() 
@@ -51,9 +52,9 @@ class Repository:
     def get_user_by_id(self,id:id) -> Optional["User"]:
         try:
             query = """
-            SELECT * FROM users WHERE id = %s LIMIT 1;
+            SELECT id,firstname,lastname,phone_number FROM users WHERE id = %s LIMIT 1;
             """
-            self.cursor.execute(query, id)
+            self.cursor.execute(query, (id,))
             row = self.cursor.fetchone()
             if row:
                 id,firstname,lastname,phone_number= row
@@ -64,3 +65,18 @@ class Repository:
         except psycopg2.Error as e:
             print(f"Database error: {e}")
             return None
+
+    def create_user(self,usr:User):
+        try:
+            query = """
+            INSERT INTO users(
+            id, firstname, lastname, phone_number, position_id,birth_date)
+            VALUES (%(id)s, %(firstname)s, %(lastname)s, %(phone_number)s, %(position_id)s,%(birth_date)s);
+            """
+            self.cursor.execute(query, 
+            {'id':usr.id,'firstname':usr.firstname,
+             'lastname':usr.lastname,'phone_number':usr.phone_number,
+             'position_id':usr.position.id,'birth_date':usr.birth_date})
+            self.conn.commit()
+        except psycopg2.Error as e:
+            print(f"Database error: {e}")

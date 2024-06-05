@@ -22,4 +22,7 @@ class UseCase:
     def get_user_by_id(self,id:id) -> Optional[User]:
         return self.pgRepo.get_user_by_id(id)
 
+    def create_user(self,usr:User):
+        self.pgRepo.create_user(usr) 
+
 

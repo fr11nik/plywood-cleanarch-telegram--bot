@@ -17,12 +17,6 @@ CREATE TABLE products (
     min_ready_date TIMESTAMP
 );
 
--- Table for Organization
-CREATE TABLE organizations (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
-);
-
 -- Table for Position
 CREATE TABLE positions (
     id SERIAL PRIMARY KEY,
@@ -37,7 +31,7 @@ CREATE TABLE users (
     phone_number VARCHAR(50),
     birth_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     position_id INTEGER REFERENCES positions(id),
-    organization_id INTEGER REFERENCES organizations(id),
+    organization VARCHAR(255),
     email VARCHAR(255),
     UNIQUE(email)
 );

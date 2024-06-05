@@ -1,0 +1,7 @@
+TELEGRAM_BOT_TOKEN: "token"
+db_config:
+  database: "postgres"
+  host: "localhost"
+  user: "postgres"
+  password: "root"
+  port: "5432"

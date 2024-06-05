@@ -12,6 +12,10 @@ class PostgresRepo(ABC):
     def get_user_by_id(self,id:id) -> Optional["User"]:
         pass
 
+    @abstractmethod
+    def create_user(self,usr:User):
+        pass
+
 class UseCase(ABC):
     @abstractmethod
     def init(self,pgRepo:PostgresRepo):
@@ -31,4 +35,8 @@ class UseCase(ABC):
    
     @abstractmethod
     def get_user_by_id(self,id:id) -> Optional["User"]:
+        pass
+
+    @abstractmethod
+    def create_user(self,usr:User):
         pass
